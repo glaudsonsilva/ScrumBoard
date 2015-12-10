@@ -55,11 +55,20 @@ namespace SB.Domain.Entities
             }
         }
 
-        public bool Save(IDbGateway<Board> gateway)
+        public bool Save(IDbGateway<Board> gateway, IDbGateway<TaskList> taskListGateway, IDbGateway<History> historyGateway)
         {
             var isSaved = gateway.Save(this);
 
-            this.State = isSaved ? State.Modify : State.Insert;
+            if (isSaved)
+            {
+                foreach (var taskList in this.TaskList)
+                    taskList.Save(taskListGateway);
+
+                foreach (var history in this.Histories)
+                    history.Save(historyGateway);
+
+                this.State = isSaved ? State.Modify : State.Insert;
+            }
 
             return isSaved;
         }
