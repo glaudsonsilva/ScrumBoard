@@ -60,7 +60,7 @@
     <Compile Include="Tests\HistoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SB.BLL\SB.Domain.csproj">
+    <ProjectReference Include="..\SB.Domain\SB.Domain.csproj">
       <Project>{9602981c-399a-4c00-8806-de9859b8956e}</Project>
       <Name>SB.Domain</Name>
     </ProjectReference>
