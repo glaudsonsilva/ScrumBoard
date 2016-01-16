@@ -37,36 +37,33 @@ namespace SB.Domain.Entities
             this.Description = description;
         }
 
-        public BService Save(IDbGateway<Task> gateway)
+        public void Save(IDbGateway<Task> gateway)
         {
-            var bs = this.ValidateTaskInsertion();
+            try
+            {
+                this.ValidateTaskInsertion();
 
-            if (!bs.isSuccess)
-                return bs;
+                var isSaved = gateway.Save(this);
 
-            var isSaved = gateway.Save(this);
+                this.State = isSaved ? State.Modify : State.Insert;
+            }
+            finally
+            {
 
-            this.State = isSaved ? State.Modify : State.Insert;
-
-            bs.isSuccess = true;
-
-            return bs;
+            }
         }
 
-        private BService ValidateTaskInsertion()
+        private void ValidateTaskInsertion()
         {
-            var bs = new BService { isSuccess = true };
-
             if (String.IsNullOrEmpty(this.Title))
-                bs.AddValidationMessage(Strings.MustSet, "a title");
+                throw new Exception(string.Format(Strings.MustSet, "a title"));
 
             if (this.List == null)
-                bs.AddValidationMessage(Strings.MustPutIn, "a list");
+                throw new Exception(string.Format(Strings.MustSet, "a list"));
 
             if (this.History == null)
-                bs.AddValidationMessage(Strings.MustPutIn, "a history");
+                throw new Exception(string.Format(Strings.MustSet, "a history"));
 
-            return bs;
         }
 
         public static object Find(IDbGateway<Task> gateway, int id)

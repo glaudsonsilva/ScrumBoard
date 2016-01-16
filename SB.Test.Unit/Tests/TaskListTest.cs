@@ -108,9 +108,8 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void SaveTaskList()
         {
-            BService bs = this.TaskList.Save(new TestGateway<TaskList>());
+            this.TaskList.Save(new TestGateway<TaskList>());
 
-            Assert.IsTrue(bs.isSuccess);
             Assert.IsTrue(this.TaskList.State == State.Modify);
         }
 

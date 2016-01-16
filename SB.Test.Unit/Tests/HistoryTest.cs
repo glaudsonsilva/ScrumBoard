@@ -35,9 +35,8 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void SaveHistory()
         {
-            var bs = this.History.Save(new TestGateway<History>());
+            this.History.Save(new TestGateway<History>());
 
-            Assert.IsTrue(bs.isSuccess);
             Assert.IsTrue(this.History.State == State.Modify);
         }
 

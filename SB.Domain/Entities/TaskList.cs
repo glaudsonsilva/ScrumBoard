@@ -63,15 +63,11 @@ namespace SB.Domain
             }
         }
 
-        public BService Save(IDbGateway<TaskList> gateway)
+        public void Save(IDbGateway<TaskList> gateway)
         {
-            var bs = new BService { isSuccess = true };
+            gateway.Save(this);
 
-            bs.isSuccess = gateway.Save(this);
-
-            this.State = bs.isSuccess ? State.Modify : State.Insert;
-
-            return bs;
+            this.State = State.Modify;
         }
     }
 }

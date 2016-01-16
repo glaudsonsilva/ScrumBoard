@@ -32,15 +32,11 @@ namespace SB.Domain.Entities
             task.History = this;
         }
 
-        public BService Save(IDbGateway<History> gateway)
+        public void Save(IDbGateway<History> gateway)
         {
-            var bs = new BService { isSuccess = true };
+            gateway.Save(this);
 
-            bs.isSuccess = gateway.Save(this);
-
-            this.State = bs.isSuccess ? State.Modify : State.Insert;
-
-            return bs;
+            this.State = State.Modify;
         }
     }
 }
