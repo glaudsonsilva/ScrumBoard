@@ -101,24 +101,19 @@ namespace SB.Test.Unit.Tests
         public void SaveBoard()
         {
             this.AddSeveralLists();
-            this.Board.Save(this.Gateway, new TestGateway<TaskList>(), new TestGateway<History>());
+            this.Board.Name = "Board 1";
+            var notification = this.Board.Save(this.Gateway);
 
-            Assert.IsTrue(this.Board.State == State.Modify);
-
-            foreach (var taskList in this.Board.TaskList)
-                Assert.IsTrue(taskList.State == State.Modify);
-
-            foreach (var history in this.Board.Histories)
-                Assert.IsTrue(history.State == State.Modify);
+            Assert.IsFalse(notification.HasError());
         }
 
         [TestMethod]
         public void DontSaveBoard()
         {
-            this.Gateway.SaveDelegated = delegate (Board x) { return false; };
-            this.Board.Save(this.Gateway, new TestGateway<TaskList>(), new TestGateway<History>());
+            this.Gateway.SaveDelegated = delegate (Board x) { x.Notification.AddError("error"); return false; };
+            var notification = this.Board.Save(this.Gateway);
 
-            Assert.IsTrue(this.Board.State == State.Insert);
+            Assert.IsTrue(notification.HasError());
         }
 
         private void AddSeveralLists()

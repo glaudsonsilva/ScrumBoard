@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SB.Domain.Entities;
 using System;
 using SB.Domain.Interfaces;
+using SB.Domain.Shared;
 
 namespace SB.Domain
 {
@@ -63,11 +64,19 @@ namespace SB.Domain
             }
         }
 
-        public void Save(IDbGateway<TaskList> gateway)
+        public Notification Save(IDbGateway<TaskList> gateway)
         {
-            gateway.Save(this);
+            try
+            {
+                gateway.Save(this);
 
-            this.State = State.Modify;
+                this.State = State.Modify;
+            }
+            catch (Exception ex)
+            {
+                this.Notification.AddError(ex);
+            }
+            return this.Notification;
         }
     }
 }

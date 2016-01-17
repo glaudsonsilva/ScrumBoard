@@ -15,12 +15,10 @@ namespace SB.Test.Unit.Gateways
             this.SaveDelegated = saveDelegated;
         }
 
-        public bool Save(T task)
+        public void Save(T task)
         {
             if (this.SaveDelegated != null)
-                return this.SaveDelegated.Invoke(task);
-
-            return task != null;
+                this.SaveDelegated.Invoke(task);
         }
 
         public T Find(int id)

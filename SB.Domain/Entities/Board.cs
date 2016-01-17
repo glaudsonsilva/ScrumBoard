@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using SB.Domain.Interfaces;
+using SB.Domain.Shared;
 
 namespace SB.Domain.Entities
 {
@@ -10,6 +11,8 @@ namespace SB.Domain.Entities
         public IList<TaskList> TaskList { get; private set; }
 
         public IList<History> Histories { get; private set; }
+
+        public string Name { get; set; }
 
         public Board()
         {
@@ -55,22 +58,30 @@ namespace SB.Domain.Entities
             }
         }
 
-        public bool Save(IDbGateway<Board> gateway, IDbGateway<TaskList> taskListGateway, IDbGateway<History> historyGateway)
+        public Notification Save(IDbGateway<Board> gateway)
         {
-            var isSaved = gateway.Save(this);
-
-            if (isSaved)
+            try
             {
-                foreach (var taskList in this.TaskList)
-                    taskList.Save(taskListGateway);
+                this.ValidateTaskInsertion();
 
-                foreach (var history in this.Histories)
-                    history.Save(historyGateway);
+                if (this.Notification.HasError())
+                    return this.Notification;
 
-                this.State = isSaved ? State.Modify : State.Insert;
+                gateway.Save(this);
+
+                this.State = State.Modify;
             }
+            catch (Exception ex)
+            {
+                this.Notification.AddError(ex);
+            }
+            return this.Notification;
+        }
 
-            return isSaved;
+        private void ValidateTaskInsertion()
+        {
+            if (String.IsNullOrWhiteSpace(this.Name))
+                this.Notification.AddError(string.Format(Strings.MustSet, "a name"));
         }
     }
 }

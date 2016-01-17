@@ -1,4 +1,5 @@
 ﻿using SB.Domain.Interfaces;
+using SB.Domain.Shared;
 using System;
 using System.Collections.Generic;
 
@@ -37,32 +38,36 @@ namespace SB.Domain.Entities
             this.Description = description;
         }
 
-        public void Save(IDbGateway<Task> gateway)
+        public Notification Save(IDbGateway<Task> gateway)
         {
             try
             {
                 this.ValidateTaskInsertion();
 
-                var isSaved = gateway.Save(this);
+                if (this.Notification.HasError())
+                    return this.Notification;
 
-                this.State = isSaved ? State.Modify : State.Insert;
+                gateway.Save(this);
+
+                this.State = State.Modify;
             }
-            finally
+            catch (Exception ex)
             {
-
+                this.Notification.AddError(ex);
             }
+            return this.Notification;
         }
 
         private void ValidateTaskInsertion()
         {
             if (String.IsNullOrEmpty(this.Title))
-                throw new Exception(string.Format(Strings.MustSet, "a title"));
+                this.Notification.AddError(string.Format(Strings.MustPutIn, "a title"));
 
             if (this.List == null)
-                throw new Exception(string.Format(Strings.MustSet, "a list"));
+                this.Notification.AddError(string.Format(Strings.MustPutIn, "a list"));
 
             if (this.History == null)
-                throw new Exception(string.Format(Strings.MustSet, "a history"));
+                this.Notification.AddError(string.Format(Strings.MustPutIn, "a history"));
 
         }
 

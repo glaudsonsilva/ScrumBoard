@@ -108,9 +108,9 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void SaveTaskList()
         {
-            this.TaskList.Save(new TestGateway<TaskList>());
+            var notification = this.TaskList.Save(new TestGateway<TaskList>());
 
-            Assert.IsTrue(this.TaskList.State == State.Modify);
+            Assert.IsFalse(notification.HasError());
         }
 
         private void AddSeveralTasks()

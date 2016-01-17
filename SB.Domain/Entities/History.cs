@@ -1,4 +1,5 @@
 ﻿using SB.Domain.Interfaces;
+using SB.Domain.Shared;
 using System;
 using System.Collections.Generic;
 
@@ -32,11 +33,19 @@ namespace SB.Domain.Entities
             task.History = this;
         }
 
-        public void Save(IDbGateway<History> gateway)
+        public Notification Save(IDbGateway<History> gateway)
         {
-            gateway.Save(this);
+            try
+            {
+                gateway.Save(this);
 
-            this.State = State.Modify;
+                this.State = State.Modify;
+            }
+            catch (Exception ex)
+            {
+                this.Notification.AddError(ex);
+            }
+            return this.Notification;
         }
     }
 }

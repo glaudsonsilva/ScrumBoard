@@ -70,13 +70,12 @@ namespace SB.Test.Unit.Tests
         {
             this.Task.List = new TaskList("List 1");
             this.Task.History = new History("History 1");
-            this.Task.Save(this.Gateway);
+            var notification = this.Task.Save(this.Gateway);
 
-            Assert.IsTrue(this.Task.State == State.Modify);
+            Assert.IsFalse(notification.HasError());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
         public void DontSaveTask()
         {
             this.Gateway.SaveDelegated = delegate (Task x) { return false; };
@@ -86,25 +85,23 @@ namespace SB.Test.Unit.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
         public void DontSaveTaskNullList()
         {
             this.Task.History = new History("History 1");
-            this.Task.Save(this.Gateway);
+            var notification = this.Task.Save(this.Gateway);
 
-            Assert.IsTrue(this.Task.State == State.Insert);
-            //Assert.IsTrue(bs.Message.First() == "You must put it in a list.");
+            Assert.IsTrue(notification.HasError());
+            Assert.AreEqual(notification.Errors.First(), "You must put it in a list.");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
         public void DontSaveTaskNullHistory()
         {
             this.Task.List = new TaskList("List 1");
-            this.Task.Save(this.Gateway);
+            var notification = this.Task.Save(this.Gateway);
 
-            Assert.IsTrue(this.Task.State == State.Insert);
-            //Assert.IsTrue(bs.Message.First() == "You must put it in a history.");
+            Assert.IsTrue(notification.HasError());
+            Assert.AreEqual(notification.Errors.First(), "You must put it in a history.");
         }
 
         [TestMethod]
