@@ -68,12 +68,16 @@ namespace SB.Domain.Entities
 
             if (this.History == null)
                 this.Notification.AddError(string.Format(Strings.MustPutIn, "a history"));
-
         }
 
         public static object Find(IDbGateway<Task> gateway, int id)
         {
             return gateway.Find(id);
+        }
+
+        public void Move(TaskList listB)
+        {
+            this.List = listB;
         }
     }
 }

@@ -68,11 +68,16 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void SaveTask()
         {
-            this.Task.List = new TaskList("List 1");
-            this.Task.History = new History("History 1");
+            this.CreateAValidTask();
             var notification = this.Task.Save(this.Gateway);
 
             Assert.IsFalse(notification.HasError());
+        }
+
+        private void CreateAValidTask()
+        {
+            this.Task.List = new TaskList("List A");
+            this.Task.History = new History("History 1");
         }
 
         [TestMethod]
@@ -110,6 +115,22 @@ namespace SB.Test.Unit.Tests
             var task = Task.Find(Gateway, 1);
 
             Assert.IsTrue(task is Task);
+        }
+
+        [TestMethod]
+        public void MoveTaskFromListAToListB()
+        {
+            var listB = new TaskList("List B");
+
+            this.CreateAValidTask();
+            this.Task.Save(this.Gateway);
+
+            this.Task.Move(listB);
+
+            var notification = this.Task.Save(this.Gateway);
+
+            Assert.IsFalse(notification.HasError());
+            Assert.AreEqual(this.Task.List, listB);
         }
     }
 }
