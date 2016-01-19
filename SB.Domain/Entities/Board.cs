@@ -58,7 +58,7 @@ namespace SB.Domain.Entities
             }
         }
 
-        public Notification Save(IDbGateway<Board> gateway)
+        public Notification Save(IRepository<Board> repository)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace SB.Domain.Entities
                 if (this.Notification.HasError())
                     return this.Notification;
 
-                gateway.Save(this);
+                repository.Save(this);
 
                 this.State = State.Modify;
             }

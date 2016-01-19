@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SB.Domain;
 using SB.Domain.Entities;
-using SB.Test.Unit.Gateways;
+using SB.Test.Unit.Repositories;
 
 namespace SB.Test.Unit.Tests
 {
@@ -10,12 +10,12 @@ namespace SB.Test.Unit.Tests
     {
         private Board Board;
         private const string LIST_1_NAME = "List 1";
-        private TestGateway<Board> Gateway;
+        private TestRepository<Board> Repository;
 
         public BoardTest()
         {
             this.Board = new Board();
-            this.Gateway = new TestGateway<Board>();
+            this.Repository = new TestRepository<Board>();
         }
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace SB.Test.Unit.Tests
         {
             this.AddSeveralLists();
             this.Board.Name = "Board 1";
-            var notification = this.Board.Save(this.Gateway);
+            var notification = this.Board.Save(this.Repository);
 
             Assert.IsFalse(notification.HasError());
         }
@@ -110,8 +110,8 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void DontSaveBoard()
         {
-            this.Gateway.SaveDelegated = delegate (Board x) { x.Notification.AddError("error"); return false; };
-            var notification = this.Board.Save(this.Gateway);
+            this.Repository.SaveDelegated = delegate (Board x) { x.Notification.AddError("error"); return false; };
+            var notification = this.Board.Save(this.Repository);
 
             Assert.IsTrue(notification.HasError());
         }

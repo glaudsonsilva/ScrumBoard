@@ -43,7 +43,7 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\History.cs" />
     <Compile Include="Exceptions\NotSavedException.cs" />
-    <Compile Include="Interfaces\IDbGateway.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Enumerators\State.cs" />
     <Compile Include="Entities\TaskList.cs" />
     <Compile Include="Entities\Board.cs" />

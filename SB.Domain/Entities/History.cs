@@ -33,11 +33,11 @@ namespace SB.Domain.Entities
             task.History = this;
         }
 
-        public Notification Save(IDbGateway<History> gateway)
+        public Notification Save(IRepository<History> repository)
         {
             try
             {
-                gateway.Save(this);
+                repository.Save(this);
 
                 this.State = State.Modify;
             }

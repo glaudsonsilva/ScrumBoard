@@ -64,11 +64,11 @@ namespace SB.Domain
             }
         }
 
-        public Notification Save(IDbGateway<TaskList> gateway)
+        public Notification Save(IRepository<TaskList> repository)
         {
             try
             {
-                gateway.Save(this);
+                repository.Save(this);
 
                 this.State = State.Modify;
             }

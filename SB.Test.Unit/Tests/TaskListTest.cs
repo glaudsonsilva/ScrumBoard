@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SB.Domain;
 using System.Linq;
 using SB.Domain.Entities;
-using SB.Test.Unit.Gateways;
+using SB.Test.Unit.Repositories;
 
 namespace SB.Test.Unit.Tests
 {
@@ -108,7 +108,7 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void SaveTaskList()
         {
-            var notification = this.TaskList.Save(new TestGateway<TaskList>());
+            var notification = this.TaskList.Save(new TestRepository<TaskList>());
 
             Assert.IsFalse(notification.HasError());
         }

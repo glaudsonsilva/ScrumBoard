@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SB.Domain;
 using System.Linq;
 using SB.Domain.Entities;
-using SB.Test.Unit.Gateways;
+using SB.Test.Unit.Repositories;
 
 namespace SB.Test.Unit.Tests
 {
@@ -12,12 +12,12 @@ namespace SB.Test.Unit.Tests
     {
         private Task Task;
 
-        private TestGateway<Task> Gateway;
+        private TestRepository<Task> Repository;
 
         public TaskTest()
         {
             this.Task = new Task("List 1");
-            this.Gateway = new TestGateway<Task>();
+            this.Repository = new TestRepository<Task>();
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace SB.Test.Unit.Tests
         public void SaveTask()
         {
             this.CreateAValidTask();
-            var notification = this.Task.Save(this.Gateway);
+            var notification = this.Task.Save(this.Repository);
 
             Assert.IsFalse(notification.HasError());
         }
@@ -83,8 +83,8 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void DontSaveTask()
         {
-            this.Gateway.SaveDelegated = delegate (Task x) { return false; };
-            this.Task.Save(this.Gateway);
+            this.Repository.SaveDelegated = delegate (Task x) { return false; };
+            this.Task.Save(this.Repository);
 
             Assert.IsTrue(this.Task.State == State.Insert);
         }
@@ -93,7 +93,7 @@ namespace SB.Test.Unit.Tests
         public void DontSaveTaskNullList()
         {
             this.Task.History = new History("History 1");
-            var notification = this.Task.Save(this.Gateway);
+            var notification = this.Task.Save(this.Repository);
 
             Assert.IsTrue(notification.HasError());
             Assert.AreEqual(notification.Errors.First(), "You must put it in a list.");
@@ -103,7 +103,7 @@ namespace SB.Test.Unit.Tests
         public void DontSaveTaskNullHistory()
         {
             this.Task.List = new TaskList("List 1");
-            var notification = this.Task.Save(this.Gateway);
+            var notification = this.Task.Save(this.Repository);
 
             Assert.IsTrue(notification.HasError());
             Assert.AreEqual(notification.Errors.First(), "You must put it in a history.");
@@ -112,7 +112,7 @@ namespace SB.Test.Unit.Tests
         [TestMethod]
         public void FindTask()
         {
-            var task = Task.Find(Gateway, 1);
+            var task = Task.Find(Repository, 1);
 
             Assert.IsTrue(task is Task);
         }
@@ -123,11 +123,11 @@ namespace SB.Test.Unit.Tests
             var listB = new TaskList("List B");
 
             this.CreateAValidTask();
-            this.Task.Save(this.Gateway);
+            this.Task.Save(this.Repository);
 
             this.Task.Move(listB);
 
-            var notification = this.Task.Save(this.Gateway);
+            var notification = this.Task.Save(this.Repository);
 
             Assert.IsFalse(notification.HasError());
             Assert.AreEqual(this.Task.List, listB);

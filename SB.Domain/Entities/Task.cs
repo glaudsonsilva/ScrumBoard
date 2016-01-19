@@ -38,7 +38,7 @@ namespace SB.Domain.Entities
             this.Description = description;
         }
 
-        public Notification Save(IDbGateway<Task> gateway)
+        public Notification Save(IRepository<Task> repository)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace SB.Domain.Entities
                 if (this.Notification.HasError())
                     return this.Notification;
 
-                gateway.Save(this);
+                repository.Save(this);
 
                 this.State = State.Modify;
             }
@@ -70,9 +70,9 @@ namespace SB.Domain.Entities
                 this.Notification.AddError(string.Format(Strings.MustPutIn, "a history"));
         }
 
-        public static object Find(IDbGateway<Task> gateway, int id)
+        public static object Find(IRepository<Task> repository, int id)
         {
-            return gateway.Find(id);
+            return repository.Find(id);
         }
 
         public void Move(TaskList listB)

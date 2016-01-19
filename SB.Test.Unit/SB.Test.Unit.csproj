@@ -52,7 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Gateways\TestGateway.cs" />
+    <Compile Include="Repositories\TestRepository.cs" />
     <Compile Include="Tests\TaskTest.cs" />
     <Compile Include="Tests\TaskListTest.cs" />
     <Compile Include="Tests\BoardTest.cs" />
