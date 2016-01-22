@@ -1,35 +1,24 @@
-﻿using System;
+﻿using SB.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+using System.Web;
+using System.Web.Mvc;
 
 namespace SB.UI.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            return View();
-        }
+            var board = new Board();
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+            board.TaskList.Add(new Domain.TaskList("List 1"));
+            board.TaskList.Add(new Domain.TaskList("List 2"));
+            board.TaskList.Add(new Domain.TaskList("List 3"));
+            board.TaskList.Add(new Domain.TaskList("List 4"));
 
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View("~/Views/Shared/Error.cshtml");
+            return View(board);
         }
     }
 }
