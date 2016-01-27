@@ -1,4 +1,6 @@
-﻿using SB.Domain.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using SB.Domain.Interfaces;
 
 namespace SB.Test.Unit.Repositories
 {
@@ -24,6 +26,11 @@ namespace SB.Test.Unit.Repositories
         public T Find(int id)
         {
             return new T();
+        }
+
+        public IEnumerable<T> List()
+        {
+            throw new NotImplementedException();
         }
     }
 }

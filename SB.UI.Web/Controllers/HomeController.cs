@@ -1,24 +1,38 @@
 ﻿using SB.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using SB.Domain.Interfaces; 
 using System.Web.Mvc;
 
 namespace SB.UI.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private IRepository<Board> Repository;
+
+        public HomeController(IRepository<Board> repository)
+        {
+            this.Repository = repository;
+
+        }
+
         public ActionResult Index()
         {
-            var board = new Board();
+            var boards = this.Repository.List();
 
-            board.TaskList.Add(new Domain.TaskList("List 1"));
-            board.TaskList.Add(new Domain.TaskList("List 2"));
-            board.TaskList.Add(new Domain.TaskList("List 3"));
-            board.TaskList.Add(new Domain.TaskList("List 4"));
+            return View(boards);
+        }
 
-            return View(board);
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Board board)
+        {
+            board.Save(this.Repository);
+
+            return RedirectToAction("Index");
         }
     }
 }

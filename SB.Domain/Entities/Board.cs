@@ -12,6 +12,8 @@ namespace SB.Domain.Entities
 
         public IList<History> Histories { get; private set; }
 
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public Board()

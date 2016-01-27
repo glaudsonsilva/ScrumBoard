@@ -1,13 +1,15 @@
-﻿@model SB.Domain.Entities.Board
+﻿@model IEnumerable<SB.Domain.Entities.Board>
 @{
     ViewBag.Title = "Scrum Board";
 }
 
 <div class="row">
-    @foreach (var list in Model.TaskList)
+    @Html.ActionLink("Create", "Create")
+    @if (Model != null)
     {
-        <div>
-            @list.Name
-        </div>
+        foreach (var board in Model)
+        {
+            <div>@string.Format("Board: [{0}] - {1}", board.Id, board.Name)</div>
+        }
     }
 </div>
