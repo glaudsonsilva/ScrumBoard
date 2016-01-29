@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - Data", "4.1 - Data", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - CrossCutting", "4.2 - CrossCutting", "{8FBCA66C-4E06-496F-ABA0-FAFF4B0044A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumBoard.Infra.CrossCutting.DependencyResolver", "ScrumBoard.Infra.CrossCutting.DependencyResolver\ScrumBoard.Infra.CrossCutting.DependencyResolver.csproj", "{47CEE00F-8250-4955-9EAA-C3DC1933BB9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{D7F58FEA-879E-4F97-81E7-275E719F746A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7F58FEA-879E-4F97-81E7-275E719F746A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7F58FEA-879E-4F97-81E7-275E719F746A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47CEE00F-8250-4955-9EAA-C3DC1933BB9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47CEE00F-8250-4955-9EAA-C3DC1933BB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47CEE00F-8250-4955-9EAA-C3DC1933BB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47CEE00F-8250-4955-9EAA-C3DC1933BB9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +64,6 @@ Global
 		{D7F58FEA-879E-4F97-81E7-275E719F746A} = {A6EBC946-0134-4523-8194-0CBA1B54DF90}
 		{A6EBC946-0134-4523-8194-0CBA1B54DF90} = {55D50941-1A05-4F38-BD29-342EEE078E76}
 		{8FBCA66C-4E06-496F-ABA0-FAFF4B0044A3} = {55D50941-1A05-4F38-BD29-342EEE078E76}
+		{47CEE00F-8250-4955-9EAA-C3DC1933BB9C} = {8FBCA66C-4E06-496F-ABA0-FAFF4B0044A3}
 	EndGlobalSection
 EndGlobal

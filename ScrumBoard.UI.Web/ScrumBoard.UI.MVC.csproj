@@ -49,6 +49,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -123,6 +135,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -182,9 +195,9 @@
       <Project>{9602981c-399a-4c00-8806-de9859b8956e}</Project>
       <Name>ScrumBoard.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ScrumBoard.DAL\ScrumBoard.DAL.csproj">
-      <Project>{d7f58fea-879e-4f97-81e7-275e719f746a}</Project>
-      <Name>ScrumBoard.DAL</Name>
+    <ProjectReference Include="..\ScrumBoard.Infra.CrossCutting.DependencyResolver\ScrumBoard.Infra.CrossCutting.DependencyResolver.csproj">
+      <Project>{47cee00f-8250-4955-9eaa-c3dc1933bb9c}</Project>
+      <Name>ScrumBoard.Infra.CrossCutting.DependencyResolver</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

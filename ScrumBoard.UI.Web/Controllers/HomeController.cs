@@ -1,5 +1,4 @@
-﻿using ScrumBoard.DAL;
-using ScrumBoard.Domain.Entities;
+﻿using ScrumBoard.Domain.Entities;
 using ScrumBoard.Domain.Interfaces;
 using System.Web.Mvc;
 
@@ -9,14 +8,9 @@ namespace ScrumBoard.UI.MVC.Controllers
     {
         private IRepository<Board> Repository;
 
-        public HomeController() : this(new BoardInMemoryRepository())
-        {
-
-        }
         public HomeController(IRepository<Board> repository)
         {
             this.Repository = repository;
-
         }
 
         public ActionResult Index()
