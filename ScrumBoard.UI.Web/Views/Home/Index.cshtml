@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ScrumBoard.Domain.Entities.Board>
+@{
+    ViewBag.Title = "Scrum Board";
+}
+
+<div class="row">
+    @Html.ActionLink("Create", "Create")
+    @if (Model != null)
+    {
+        foreach (var board in Model)
+        {
+            <div>@string.Format("Board: [{0}] - {1}", board.Id, board.Name)</div>
+        }
+    }
+</div>
